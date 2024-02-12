@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: skillservice
+    
+logging:
+  file:
+    path: C:/FSE4/ELK_Logging 
+    name: C:/FSE4/ELK_Logging/skilltracker-elk.log    

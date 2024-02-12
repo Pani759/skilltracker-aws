@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: skilltracker-query-api
+    
+logging:
+  file:
+    path: C:/FSE4/ELK_Logging 
+    name: C:/FSE4/ELK_Logging/skilltracker-elk.log
+##logging:
+  ##path: C:/ELK_Logging/skilltracker-elk.log    

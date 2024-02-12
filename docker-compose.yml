@@ -1,0 +1,71 @@
+version: '3.7'
+
+services:
+
+  profileservice:
+    container_name: profileservice
+    image: profileservice:latest
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+      
+  skillservice:
+    container_name: skillservice
+    image: skillservice:latest
+    restart: always
+    ports:
+      - 8082:8082
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+      
+  skilltracker-event:
+    container_name: skilltracker-event
+    image: skilltracker-event:latest
+    restart: always
+    ports:
+      - 8083:8083
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+      
+  skilltracker-query-api:
+    container_name: skilltracker-query-api
+    image: skilltracker-query-api:latest
+    restart: always
+    ports:
+      - 8084:8084
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+      
+  skilltracker-api-gateway:
+    container_name: skilltracker-api-gateway
+    image: skilltracker-api-gateway:latest
+    restart: always
+    ports:
+      - 8070:8070
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+
+  skilltracker-discoveryserver:
+    container_name: skilltracker-discoveryserver
+    image: skilltracker-discoveryserver:latest
+    restart: always
+    ports:
+      - 8761:8761
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+      
+  skilltracker-security:
+    container_name: skilltracker-security
+    image: skilltracker-security:latest
+    restart: always
+    ports:
+      - 8090:8090
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"      
+            
+networks:
+  default:
+    external:
+      name: springbankNet

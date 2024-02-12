@@ -1,0 +1,59 @@
+//START the KAFKA Server and ZOOKEEPER
+
+##zookeeper-server-start.bat C:\kafka\config\zookeeper.properties
+zookeeper-server-start.bat ../../config/zookeeper.properties
+##kafka-server-start.bat C:\kafka\config\server.properties
+kafka-server-start.bat ../../config/server.properties
+
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic skilltrackertopic
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic skilltrackertopic --from-beginning
+
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic SKILLTRACKER_EVENTS_TOPIC
+kafka-topics.bat --create --bootstrap-server 127.0.0.1:9092 --replication-factor 1 --partitions 1 --topic manageprofiletopic
+kafka-topics.bat --list --bootstrap-server localhost:9092
+kafka-consumer-groups.bat --list --bootstrap-server localhost:9092
+kafka-topics.bat --delete --bootstrap-server localhost:9092 --topic skilltrackertopic
+
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic manageprofiletopic
+kafka-topics.bat --describe --zookeeper localhost:2181 --topic SKILLTRACKER_EVENTS_TOPIC
+kafka-topics.bat --describe --bootstrap-server localhost:9092
+
+kafka-consumer-groups.bat --bootstrap-server localhost:9092 --group fse4skilltracker --reset-offsets --to-earliest --all-topics --execute
+kafka-consumer-groups.bat --bootstrap-server localhost:9092 --group fse4skilltracker --describe
+
+
+
+//New topic for Company POJO
+
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic compStockPojo
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic compStockPojo
+
+
+//New topic for Message string
+
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic msgString
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic msgString
+
+//New topic for Stock POJO
+
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic compStockPojo1
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic compStockPojo1
+
+
+      routes:
+        - id: skillservice
+          uri: lb://skillservice
+          predicates:
+            - Path=/skill-tracker/api/v1/engineer/**
+        - id: skilltracker-event-api
+          uri: lb://skilltracker-event-api
+          predicates:
+            - Path=/sendEventMessage/**            
+        - id: skilltracker-query-api
+          uri: lb://skilltracker-query-api
+          predicates:
+            - Path=/skill-tracker/api/v1/admin/**
+        - id: profileservice
+          uri: lb://profileservice
+          predicates:
+            - Path=/skill-tracker/api/v1/engineer/**                            

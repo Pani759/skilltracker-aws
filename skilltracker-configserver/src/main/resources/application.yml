@@ -1,0 +1,15 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: skilltracker-configserver
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: file:///C:/FSE4/common-config          
+##spring.cloud.config.server.git.uri = file:///c:/Users/madsouza/Desktop/blogPost/config-files          
+                
